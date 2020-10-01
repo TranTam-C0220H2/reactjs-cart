@@ -1,26 +1,35 @@
 import React from 'react';
-import logo from './logo.svg';
+import { connect } from 'react-redux';
 import './App.css';
+import Cart from './components/Cart';
+import Footer from './components/Footer';
+import Message from './components/Message';
+import Nav from './components/Nav';
+import ProductList from './components/ProductList';
 
-function App() {
+function App(props) {
+  function showCart() {
+    if(props.statusCart) {
+      return <Cart/>
+    }
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Nav/>
+      <div className="container">
+        <ProductList/>
+        <Message/>
+        {showCart()}
+      </div>
+      <Footer/>
     </div>
   );
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    statusCart : state.statusCart
+  }
+}
+
+export default connect(mapStateToProps,null)(App);
